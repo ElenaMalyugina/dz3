@@ -47,3 +47,68 @@ function printOrder(){
         }
     echo("</table>");
 }
+
+//task2
+function compareArraysFromJSON(){
+    $dataForFile1 = [
+        [5, 6, 64],
+        [45, 2, 9],
+        [11, 7, 3]
+    ];
+
+    //чтение и запись в файл
+    function fileCRCycle($array, $fileName){
+        $json = json_encode($array);
+        file_put_contents($fileName, $json);
+
+        $jsonFromFile = file_get_contents($fileName);
+        $dataFromFile = json_decode($jsonFromFile, true);
+
+        return $dataFromFile;
+    }
+
+    //вывод разницы
+    function simpleDiff($array1, $array2){
+        for($i = 0; $i < sizeof($array1); $i++){
+            //Предполагаем, что  массивы на одном уровне заполнены однородными данными и одинаковы по длине.
+            //Иначе отлаживать несколько дней придется - не думаю, что это - цель задания.
+            //Поэтому проверяю первый элемент -  если это примитив - выполняем сравнение, иначе проваливаемся на уровень вниз
+            if(is_scalar($array1[$i][0])){
+                print_r(array_diff($array1[$i], $array2[$i]));
+                echo "<br>";
+                print_r(array_diff($array2[$i], $array1[$i]));   
+                echo "<br><br>";
+            } else{
+                simpleDiff($array1[$i], $array2[$i]);
+            }              
+        }
+    }
+
+    $dataFromFile1 = fileCRCycle($dataForFile1, 'output.json');
+
+    //вычисляем случайным образом, менять ли файл
+    $isChangeData = rand(0, 1);
+    
+    if($isChangeData){
+        //создаем новый массив на основе старого
+        $dataForFile2 = array_map(function($val){
+            if(is_array($val)){
+               return array_map(function($valInner){
+                    return $valInner * 2;
+               }, $val);
+            }
+            else{
+                return $val * 2;
+            }
+          
+        }, $dataFromFile1);
+    } else {
+        //или просто присваиваем старый массив
+        $dataForFile2 = $dataFromFile1;
+    }
+
+    $dataFromFile2 = fileCRCycle($dataForFile2, 'output2.json');   
+
+    simpleDiff($dataFromFile1, $dataFromFile2);   
+     
+}

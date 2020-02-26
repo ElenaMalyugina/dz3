@@ -11,6 +11,7 @@
     <?php
         require('./src/functions.php');
         printOrder();
+        compareArraysFromJSON();
     ?>    
 </body>
 </html>

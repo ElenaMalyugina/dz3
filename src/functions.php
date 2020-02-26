@@ -112,3 +112,32 @@ function compareArraysFromJSON(){
     simpleDiff($dataFromFile1, $dataFromFile2);   
      
 }
+
+
+//task3
+function arrayCSV(){
+    $arrayForCSV = [];
+
+    for($i=0; $i<50; $i++){
+        $arrayForCSV[$i] = rand(1, 100);
+    }
+
+    $fp = fopen('output.csv', 'w'); 
+    fputcsv($fp, $arrayForCSV, ';');
+    fclose($fp);
+
+    $fp = fopen('output.csv', 'r');
+    $data = [];
+
+    while ($str = fgetcsv($fp, 1000000, ';')) {
+        $data = $str;
+    }
+
+    foreach($data as $value){
+        if($value%2 == 0){
+            echo "<br>{$value}<br>";
+        }
+    }
+
+
+}

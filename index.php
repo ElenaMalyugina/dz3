@@ -12,6 +12,7 @@
         require('./src/functions.php');
         printOrder();
         compareArraysFromJSON();
+        arrayCSV();
     ?>    
 </body>
 </html>

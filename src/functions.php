@@ -69,7 +69,8 @@ function compareArraysFromJSON() {
 
     //вывод разницы
     function simpleDiff($array1, $array2) {
-        for ($i = 0; $i < sizeof($array1); $i++) {
+        $arrLength = sizeof($array1);
+        for ($i = 0; $i < $arrLength; $i++) {
             //Предполагаем, что  массивы на одном уровне заполнены однородными данными и одинаковы по длине.
             //Иначе отлаживать несколько дней придется - не думаю, что это - цель задания.
             //Поэтому проверяю первый элемент -  если это примитив - выполняем сравнение, иначе проваливаемся на уровень вниз
@@ -118,7 +119,7 @@ function compareArraysFromJSON() {
 function arrayCSV() {
     $arrayForCSV = [];
 
-    for ($i=0; $i<50; $i++) {
+    for ($i = 0; $i < 50; $i++) {
         $arrayForCSV[$i] = rand(1, 100);
     }
 
@@ -129,8 +130,8 @@ function arrayCSV() {
     $fp = fopen('output.csv', 'r');
     $data = [];
 
-    while ($str = fgetcsv($fp, 1000000, ';')) {
-        $data = $str;
+    while ($csvStr = fgetcsv($fp, 1000000, ';')) {
+        $data = $csvStr;
     }
 
     foreach($data as $value) {

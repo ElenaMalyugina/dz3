@@ -134,16 +134,21 @@ function arrayCSV() {
         $data = $csvStr;
     }
 
-    foreach($data as $value) {
-        if ($value % 2 == 0) {
-            echo "<br>{$value}<br>";
+    $sumEvenNumbers = array_reduce($data, function($acc, $num) {
+        if ($num % 2 == 0) {
+            $acc += $num;
         }
-    }
+        return $acc;        
+    }, 0);
+
+    echo "Cумма четных чисел равна {$sumEvenNumbers}";
 }
 
+//task4
 function getWikiData() {
     $data = file_get_contents('https://en.wikipedia.org/w/api.php?action=query&titles=Main%20Page&prop=revisions&rvprop=content&format=json');
     $data = json_decode($data, true);
     echo($data['query']['pages']['15580374']['pageid']);
+    echo "<br>";
     echo($data['query']['pages']['15580374']['title']);
 }
